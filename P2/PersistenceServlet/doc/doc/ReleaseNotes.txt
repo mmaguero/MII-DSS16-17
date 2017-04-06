@@ -1,0 +1,13 @@
+V 0.0
+Crear proyecto java, importar paquete interfaz con las clases facilitadas, además del archivo persistence.xml y las
+libs jar necesarias: eclipselink, persistence, derby.
+
+V 0.1
+Convertir proyecto a Web Dinamic, crear clase de persistencia y configurar XML, agregar clase manejadora de acciones
+de persistencia.
+
+V 0.2
+Crear paquete de comunicacion con el servlet pedido, configurar en clase ruta de servlet
+
+v0.3
+Crear javadoc de la app

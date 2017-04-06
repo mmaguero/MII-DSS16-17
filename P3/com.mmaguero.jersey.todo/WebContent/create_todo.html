@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>DSS::MII::UGr</title>
+<style>
+html {
+	font-family: Arial, Verdana, Tahoma;
+	font-size: 11px;
+	align: center;
+}
+</style>
+</head>
+<body>
+	<div>
+		<h1>UGr - MII - DSS</h1>
+	</div>
+	<fieldset>
+	
+		<h3>Form para crear un nuevo recurso de aprendizaje de la
+			asignatura</h3>
+			
+		<form action="rest/files/upload" method="post" enctype="multipart/form-data">
+		
+			<label for="id">ID</label><br /> <input name="id" /> <br /> 
+			<label for="summary">Resumen</label><br/> <input name="summary" /> <br /> 
+			<label for="description">Descripción</label><br /> 
+			<TEXTAREA NAME="description" COLS=40 ROWS=6></TEXTAREA> <br />
+			<label for="file">Adjuntar archivo <small>(Audio, video, imágenes, .zip, etc.)</small></label><br />
+			<input type="file" name="file" size="45" /> 	 
+		    <br /> <input type="submit" value="Enviar Todo" /> 
+	        <a href="http://localhost:8080/com.mmaguero.jersey.todo/rest/todos/" title="Consultar Recursos"> Ver XML de recursos</a>
+		
+		</form>
+	</fieldset>
+</body>
+</html>

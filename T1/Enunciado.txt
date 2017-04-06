@@ -1,0 +1,3 @@
+Ejercicio propuesto
+Especificar completamente la operación IHotelMgt::makeReservation (...) con OCL;
+utilizando los operadores: exists, select y asSequence->first

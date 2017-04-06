@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+      
+    <h:head>
+        <title>Motor e Interceptor!</title>
+    </h:head>
+    <h:body>
+    
+    <h:panelGrid columns="2">
+        <h:form style="align: center">
+        <hr/>
+            <h2>
+                <h:outputText id="result" value="#{form.titulo}" />
+            </h2>
+            <hr/>
+			<h:commandButton id="onOff" value="#{form.estadoTexto}"
+				actionListener="#{form.cambiarElementos}"
+				style="color:#{form.estadoColor}" />
+			<h:commandButton id="Acelerar" value="#{form.aceleraTexto}" actionListener="#{form.acelerar}" />
+        </h:form>
+        </h:panelGrid>
+    </h:body>
+</html>

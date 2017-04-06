@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<definitions name="Viaje"
+        targetNamespace="http://eclipse.org/bpel/viaje"
+        xmlns:tns="http://eclipse.org/bpel/viaje"
+        xmlns:emp="http://eclipse.org/bpel/empleado"
+        xmlns:aln="http://eclipse.org/bpel/aerolinea"
+        xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:p="http://www.w3.org/2001/XMLSchema">
+        
+        <import location="EmpleadoArtifacts.wsdl" namespace="http://eclipse.org/bpel/empleado"></import>
+        
+        <import location="AerolineaArtifacts.wsdl" namespace="http://eclipse.org/bpel/aerolinea"></import>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <types>
+        <schema attributeFormDefault="unqualified"
+        	elementFormDefault="qualified"
+        	targetNamespace="http://eclipse.org/bpel/viaje"
+        	xmlns="http://www.w3.org/2001/XMLSchema">
+
+        	
+        	
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="ViajeRequestMessage">
+        <part name="ePayload" element="emp:EmpleadoRequest"/>
+        <part name="vPayload" element="aln:AerolineaRequest"/>
+    </message>
+    <message name="ViajeResponseMessage">
+        <part name="payload" element="aln:AerolineaResponse"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the Viaje BPEL process -->
+    <portType name="Viaje">
+        <operation name="process">
+            <input  message="tns:ViajeRequestMessage" />
+            <output message="tns:ViajeResponseMessage"/>
+        </operation>
+    </portType>   
+ 
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="Viaje">
+        <plnk:role name="ViajeProvider" portType="tns:Viaje"/>
+    </plnk:partnerLinkType>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="ViajeBinding" type="tns:Viaje">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="process">
+    		<soap:operation
+    			soapAction="http://eclipse.org/bpel/viaje/process" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    </binding>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="ViajeService">
+    	<port name="ViajePort" binding="tns:ViajeBinding">
+    		<soap:address location="http://localhost:8080/ode/processes/Viaje" />
+    	</port>
+    </service>
+</definitions>

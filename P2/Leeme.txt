@@ -1,0 +1,2 @@
+Carpeta doc:
+Contiene documentacion de la aplicacion y leeme.pdf, una pequeña explicacion

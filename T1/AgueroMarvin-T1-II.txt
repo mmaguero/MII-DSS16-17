@@ -1,0 +1,13 @@
+--en la precondición hay que asegurar que id_student representa a un identificador de estudiante válido
+--en la poscondición que los detalles devueltos por la operación concuerdan con los detalles del estudiante cuyo identificador es in_student
+
+context StudentManagement :: getStudentDetails(in_student: StudentIdentifier): StudentDetails
+
+pre: 
+ student->exists(s | s.id = in_student)
+
+post: 
+Let elEstudiante = student->select (s | s.id = in_student) in
+	result.nombre= elEstudiante.nombre and
+	result.codigoPostal = elEstudiante.codigoPostal and
+	result.email = elEstuiante.email

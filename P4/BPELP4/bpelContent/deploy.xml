@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:aerolinea="http://eclipse.org/bpel/aerolinea" xmlns:comprador="http://eclipse.org/bpel/comprador" xmlns:empleado="http://eclipse.org/bpel/empleado" xmlns:mercadeo="http://eclipse.org/bpel/mercadeo" xmlns:vendedor="http://eclipse.org/bpel/vendedor" xmlns:viaje="http://eclipse.org/bpel/viaje">
+  <process name="aerolinea:Aerolinea">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="aerolinea:AerolineaService" port="AerolineaPort"/>
+    </provide>
+    <invoke partnerLink="plnkAerolinea">
+      <service name="aerolinea:AerolineaService" port="AerolineaPort"/>
+    </invoke>
+  </process>
+  <process name="empleado:Empleado">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="empleado:EmpleadoService" port="EmpleadoPort"/>
+    </provide>
+    <invoke partnerLink="plnkEmpleado">
+      <service name="empleado:EmpleadoService" port="EmpleadoPort"/>
+    </invoke>
+  </process>
+  <process name="viaje:Viaje">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="viaje:ViajeService" port="ViajePort"/>
+    </provide>
+    <invoke partnerLink="pnlkEmpleado">
+      <service name="empleado:EmpleadoService" port="EmpleadoPort"/>
+    </invoke>
+    <invoke partnerLink="pnlkAerolinea">
+      <service name="aerolinea:AerolineaService" port="AerolineaPort"/>
+    </invoke>
+  </process>
+  <process name="comprador:Comprador">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="comprador:CompradorService" port="CompradorPort"/>
+    </provide>
+    <invoke partnerLink="pnlkComprador">
+      <service name="comprador:CompradorService" port="CompradorPort"/>
+    </invoke>
+  </process>
+  <process name="mercadeo:Mercadeo">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="pnlkComprador">
+      <service name="comprador:CompradorService" port="CompradorPort"/>
+    </provide>
+    <invoke partnerLink="client">
+      <service name="mercadeo:MercadeoService" port="MercadeoPort"/>
+    </invoke>
+    <invoke partnerLink="pnlkVendedor">
+      <service name="vendedor:VendedorService" port="VendedorPort"/>
+    </invoke>
+  </process>
+  <process name="vendedor:Vendedor">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="vendedor:VendedorService" port="VendedorPort"/>
+    </provide>
+    <invoke partnerLink="pnlkVendedor">
+      <service name="vendedor:VendedorService" port="VendedorPort"/>
+    </invoke>
+  </process>
+</deploy>

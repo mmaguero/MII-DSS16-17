@@ -1,0 +1,6 @@
+---Estructura---
+app-debug.apk Apk modo debug
+app-release.apk Apk modo release (el testeado en mi móvil)
+DSS-P5-QuizApp Release notes de la práctica
+settings.jar Configuración de mi IDE
+QuizApp.zip Proyecto Android Studio

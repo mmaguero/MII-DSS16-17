@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<definitions name="Aerolinea" targetNamespace="http://eclipse.org/bpel/aerolinea"
+	xmlns:tns="http://eclipse.org/bpel/aerolinea" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:emp="http://eclipse.org/bpel/empleado">
+
+	<import location="EmpleadoArtifacts.wsdl" namespace="http://eclipse.org/bpel/empleado"></import>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		TYPE DEFINITION - List of types participating in this BPEL process The BPEL 
+		Designer will generate default request and response types but you can define 
+		or import any XML Schema type and use them as part of the message types. 
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<types>
+		<schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+			targetNamespace="http://eclipse.org/bpel/aerolinea" xmlns="http://www.w3.org/2001/XMLSchema">
+
+			<element name="AerolineaRequest">
+				<complexType>
+					<sequence>
+						<element name="agencia">
+							<simpleType>
+								<restriction base="tns:agenciaType">
+									<enumeration value="Iberia"></enumeration>
+									<enumeration value="Vueling"></enumeration>
+								</restriction>
+							</simpleType>
+						</element>
+						<element name="destino" type="string" />
+						<element name="salida" type="dateTime"></element>
+						<element name="regreso" type="dateTime"></element>
+						<element name="clase">
+							<simpleType>
+								<restriction base="tns:agenciaType">
+									<enumeration value="Economica"></enumeration>
+									<enumeration value="Business"></enumeration>
+									<enumeration value="Primera"></enumeration>
+								</restriction>
+							</simpleType>
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+
+			<element name="AerolineaResponse">
+				<complexType>
+					<sequence>
+						<element name="precio" type="float" />
+					</sequence>
+				</complexType>
+			</element>
+
+			<simpleType name="agenciaType">
+				<restriction base="string"></restriction>
+			</simpleType>
+
+		</schema>
+	</types>
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		MESSAGE TYPE DEFINITION - Definition of the message types used as part of 
+		the port type defintions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<message name="AerolineaRequestMessage">
+		<part name="payload" element="tns:AerolineaRequest" />
+		<part name="ePayload" element="emp:EmpleadoResponse" />
+	</message>
+	<message name="AerolineaResponseMessage">
+		<part name="payload" element="tns:AerolineaResponse" />
+	</message>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		PORT TYPE DEFINITION - A port type groups a set of operations into a logical 
+		service unit. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<!-- portType implemented by the Aerolinea BPEL process -->
+	<portType name="Aerolinea">
+		<operation name="process">
+			<input message="tns:AerolineaRequestMessage" />
+			<output message="tns:AerolineaResponseMessage" />
+		</operation>
+	</portType>
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		PARTNER LINK TYPE DEFINITION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<plnk:partnerLinkType name="Aerolinea">
+		<plnk:role name="AerolineaProvider" portType="tns:Aerolinea" />
+	</plnk:partnerLinkType>
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		BINDING DEFINITION - Defines the message format and protocol details for 
+		a web service. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<binding name="AerolineaBinding" type="tns:Aerolinea">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="process">
+			<soap:operation soapAction="http://eclipse.org/bpel/aerolinea/process" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		SERVICE DEFINITION - A service groups a set of ports into a service unit. 
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<service name="AerolineaService">
+		<port name="AerolineaPort" binding="tns:AerolineaBinding">
+			<soap:address location="http://localhost:8080/ode/processes/Aerolinea" />
+		</port>
+	</service>
+</definitions>
